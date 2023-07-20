@@ -54,11 +54,21 @@ input {
 }
 
 button {
+    position: relative;
     background-color: hsl(259, 100%, 65%);
     border: none;
     width: 75px;
     height:75px;
     border-radius: 100%;
+    bottom: 0%;
+    right: 0%;
+    cursor: pointer;
+}
+
+.btn {
+    position: relative;
+    bottom: 0%;
+    right: 0%;
 }
 
 .attribution {

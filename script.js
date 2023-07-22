@@ -33,6 +33,7 @@ function calcStats(day, month, year) {
     } else {
         diffDay = daysInMonth[currentMonth - 1] - day + currentDay;
     }
+
     
     return {
         diffMonth,
@@ -51,6 +52,20 @@ function leapYear(year) {
     return false;
 }
 
+function init() {
+    document.getElementById("month").value = "";
+    document.getElementById("day").value = "";
+    document.getElementById("year").value = "";
+}
+
+window.onload = init;
+
+function formatInput(val, id) {
+    let grabInput = document.getElementById(id);
+    if(val < 10 && val.length === 1) {
+        grabInput.value = `0${val}`;
+    }
+}
 
 
 const button = document.getElementById("submit");
@@ -64,6 +79,10 @@ button.addEventListener("click", event => {
     let year = document.getElementById("year").value;
 
     const ageObj = calcStats(day, month, year);
+
+    // Format inputs so single digits have 0 on front
+    formatInput(month, "month");
+    formatInput(day, "day");
 
     // Get spans to display info
     let calcYears = document.getElementById("calc-years");

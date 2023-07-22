@@ -2,6 +2,11 @@
 function calcStats(day, month, year) {
     // Get current date
     const currentDate = new Date();
+    const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+    if(leapYear(year)) {
+        daysInMonth[1] = 29;
+    }
 
     // Getting day, month and year from currentDate
     const currentDay = currentDate.getDate();
@@ -17,11 +22,35 @@ function calcStats(day, month, year) {
         diffMonth = (12 - month) + currentMonth;
         diffYear = currentYear - year - 1;
     }
+    if(diffMonth === 12 && currentDay >= day) {
+        diffMonth = 0;
+    } else if(diffMonth === 12 && currentDay < day) {
+        diffMonth -= 1;
+    }
 
-    // diffDay = currentDay - day
+    if(day < currentDay) {
+        diffDay = currentDay - day;
+    } else {
+        diffDay = daysInMonth[currentMonth - 1] - day + currentDay;
+    }
     
-    
+    return {
+        diffMonth,
+        diffDay,
+        diffYear,
+    }
 }
+
+function leapYear(year) {
+    if(year % 400 === 0) {
+        return true;
+    }
+    if(year % 4 === 0) {
+        return true;
+    }
+    return false;
+}
+
 
 
 const button = document.getElementById("submit");
@@ -36,6 +65,12 @@ button.addEventListener("click", event => {
 
     const ageObj = calcStats(day, month, year);
 
-    
-    console.log(month);
+    // Get spans to display info
+    let calcYears = document.getElementById("calc-years");
+    let calcDays = document.getElementById("calc-days");
+    let calcMonths = document.getElementById("calc-months");
+
+    calcYears.innerHTML = ageObj.diffYear;
+    calcDays.innerHTML = ageObj.diffDay;
+    calcMonths.innerHTML = ageObj.diffMonth;
 })

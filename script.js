@@ -15,10 +15,13 @@ function calcStats(day, month, year) {
 
     let diffMonth, diffYear, diffDay;
     
-    if(month < currentMonth) {
+    if(parseInt(month) < currentMonth) {
         diffMonth = currentMonth - month;
         diffYear = currentYear - year;
-    } else {
+    } else if (parseInt(month) === currentMonth && day < currentDay){
+        diffYear = currentYear - year;
+        diffMonth = (12 - month) + currentMonth;
+    }else {
         diffMonth = (12 - month) + currentMonth;
         diffYear = currentYear - year - 1;
     }

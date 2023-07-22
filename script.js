@@ -1,3 +1,10 @@
+function init() {
+    document.getElementById("month").value = "";
+    document.getElementById("day").value = "";
+    document.getElementById("year").value = "";
+}
+
+window.onload = init;
 
 function calcStats(day, month, year) {
     // Get current date
@@ -6,6 +13,10 @@ function calcStats(day, month, year) {
 
     if(leapYear(year)) {
         daysInMonth[1] = 29;
+    }
+
+    if(!day && !month && !year) {
+        return;
     }
 
     // Getting day, month and year from currentDate
@@ -55,14 +66,6 @@ function leapYear(year) {
     return false;
 }
 
-function init() {
-    document.getElementById("month").value = "";
-    document.getElementById("day").value = "";
-    document.getElementById("year").value = "";
-}
-
-window.onload = init;
-
 function formatInput(val, id) {
     let grabInput = document.getElementById(id);
     if(val < 10 && val.length === 1) {
@@ -87,12 +90,15 @@ button.addEventListener("click", event => {
     formatInput(month, "month");
     formatInput(day, "day");
 
-    // Get spans to display info
-    let calcYears = document.getElementById("calc-years");
-    let calcDays = document.getElementById("calc-days");
-    let calcMonths = document.getElementById("calc-months");
+    if(ageObj){
+        // Get spans to display info
+        let calcYears = document.getElementById("calc-years");
+        let calcDays = document.getElementById("calc-days");
+        let calcMonths = document.getElementById("calc-months");
 
-    calcYears.innerHTML = ageObj.diffYear;
-    calcDays.innerHTML = ageObj.diffDay;
-    calcMonths.innerHTML = ageObj.diffMonth;
+        calcYears.innerHTML = ageObj.diffYear;
+        calcDays.innerHTML = ageObj.diffDay;
+        calcMonths.innerHTML = ageObj.diffMonth; 
+    }
+    
 })

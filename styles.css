@@ -102,3 +102,7 @@ section span {
     color: hsl(259, 100%, 65%);
     font-style: italic;
 }
+
+.error {
+    color: hsl(0, 100%, 67%)
+}

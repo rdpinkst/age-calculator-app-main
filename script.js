@@ -16,8 +16,9 @@ function calcStats(day, month, year) {
         daysInMonth[1] = 29;
     }
 
-    if(!day && !month && !year) {
-        return;
+    if(!day || !month || !year) {
+        console.log("inside")
+        return null;
     }
 
     // Getting day, month and year from currentDate
@@ -77,6 +78,7 @@ function formatInput(val, id) {
 function showError(input, message) {
     const formField = input.parentElement;
 
+    formField.querySelector("label").classList.add('red')
     const error = formField.querySelector('.error');
     error.textContent = message;
 }
@@ -87,9 +89,9 @@ function dayCheck(input, val, month) {
 
     if(val.length === 0) {
         showError(input, "This field is required")
-    } else if(month.length === 0 && val > defaultMax) {
+    } else if(month.length === 0 && (val > defaultMax || val < 1)) {
         showError(input, "Must be a valid day")
-    } else if(month && val > daysInMonth[month - 1]) {
+    } else if(month && (val > daysInMonth[month - 1] || val < 1)) {
         showError(input, "Must be a valid day")
     } else {
         valid = true;
@@ -97,6 +99,7 @@ function dayCheck(input, val, month) {
     return valid;
 }
 
+//
 function monthCheck(input, val) {
     let max = 12;
     let valid = false;
@@ -113,7 +116,7 @@ function monthCheck(input, val) {
 
 function yearCheck(input, val, day, month) {
     let currYear = new Date().getFullYear();
-    console.log(currYear > val)
+    
     let valid = false;
 
     if(val.length === 0) {
@@ -127,12 +130,17 @@ function yearCheck(input, val, day, month) {
 
 }
 
-function clearError(input, correct){
+function clearError(input, val, val2, val3){
     const formField = input.parentElement;
-    if(correct) {
+    
+    if(val && val2 && val3) {
+        formField.querySelector("label").classList.remove("red");
+        const error = formField.querySelector('.error');
+        error.textContent = "";
+    } else if(val) {
         const error = formField.querySelector('.error');
         error.textContent = ""; 
-    }
+    } 
     
 }
 
@@ -142,25 +150,35 @@ const button = document.getElementById("submit");
 button.addEventListener("click", event => {
     event.preventDefault();
 
-    // Get input values;
+    // Get input elements
     let monthEl = document.getElementById("month");
     let dayEl = document.getElementById("day");
     let yearEl = document.getElementById("year");
 
+    // Get spans to display info
+    let calcYears = document.getElementById("calc-years");
+    let calcDays = document.getElementById("calc-days");
+    let calcMonths = document.getElementById("calc-months");
+
+    // Get input values
     let month = monthEl.value.trim();
     let day = dayEl.value.trim();
     let year = yearEl.value.trim();
-    
+
+    // Make sure correct input
     let correctDay = dayCheck(dayEl, day, month);
     let correctMonth = monthCheck(monthEl, month);
     let correctYear = yearCheck(yearEl, year, day, month);
     
     // clear errors if correct
-    clearError(monthEl, correctMonth);
-    clearError(dayEl, correctDay);
-    clearError(yearEl, correctYear);
-    
+    clearError(monthEl, correctMonth, correctDay, correctYear);
+    clearError(dayEl, correctDay, correctMonth, correctYear);
+    clearError(yearEl, correctYear, correctDay, correctMonth);
+
     if(!correctDay || !correctMonth || !correctYear) {
+        calcYears.innerHTML = "--";
+        calcDays.innerHTML = "--";
+        calcMonths.innerHTML = "--";
         return;
     }
     const ageObj = calcStats(day, month, year);
@@ -170,16 +188,10 @@ button.addEventListener("click", event => {
     // Format inputs so single digits have 0 on front
     formatInput(month, "month");
     formatInput(day, "day");
-
+    
     if(ageObj){
-        // Get spans to display info
-        let calcYears = document.getElementById("calc-years");
-        let calcDays = document.getElementById("calc-days");
-        let calcMonths = document.getElementById("calc-months");
-
         calcYears.innerHTML = ageObj.diffYear;
         calcDays.innerHTML = ageObj.diffDay;
         calcMonths.innerHTML = ageObj.diffMonth; 
-    }
-    
+    }     
 })

@@ -104,5 +104,7 @@ section span {
 }
 
 .error {
-    color: hsl(0, 100%, 67%)
+    color: hsl(0, 100%, 67%);
+    font-size: 0.6rem;
+    margin-top: 0.2rem;
 }

@@ -83,6 +83,7 @@ function showError(input, message) {
 
 function dayCheck(input, val, month) {
     let defaultMax = 31;
+    let valid = false;
 
     if(val.length === 0) {
         showError(input, "This field is required")
@@ -91,9 +92,48 @@ function dayCheck(input, val, month) {
     } else if(month && val > daysInMonth[month - 1]) {
         showError(input, "Must be a valid day")
     } else {
-        return true;
+        valid = true;
     }
-    return false;
+    return valid;
+}
+
+function monthCheck(input, val) {
+    let max = 12;
+    let valid = false;
+
+    if(val.length === 0){
+        showError(input, "This field is required");
+    } else if(val > max || val < 1) {
+        showError(input, "Must be a valid month")
+    }else {
+        valid = true;
+    }
+    return valid;
+}
+
+function yearCheck(input, val, day, month) {
+    let currYear = new Date().getFullYear();
+    console.log(currYear > val)
+    let valid = false;
+
+    if(val.length === 0) {
+        showError(input, "This field is required")
+    } else if(currYear < val) {
+        showError(input, "Must be in past")
+    } else {
+        valid = true;
+    }
+    return valid;
+
+}
+
+function clearError(input, correct){
+    const formField = input.parentElement;
+    if(correct) {
+        const error = formField.querySelector('.error');
+        error.textContent = ""; 
+    }
+    
 }
 
 
@@ -111,8 +151,16 @@ button.addEventListener("click", event => {
     let day = dayEl.value.trim();
     let year = yearEl.value.trim();
     
-    console.log(dayCheck(dayEl, day, month))
-    if(!dayCheck(dayEl, day, month)) {
+    let correctDay = dayCheck(dayEl, day, month);
+    let correctMonth = monthCheck(monthEl, month);
+    let correctYear = yearCheck(yearEl, year, day, month);
+    
+    // clear errors if correct
+    clearError(monthEl, correctMonth);
+    clearError(dayEl, correctDay);
+    clearError(yearEl, correctYear);
+    
+    if(!correctDay || !correctMonth || !correctYear) {
         return;
     }
     const ageObj = calcStats(day, month, year);

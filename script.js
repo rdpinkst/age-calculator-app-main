@@ -5,11 +5,12 @@ function init() {
 }
 
 window.onload = init;
+const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
 
 function calcStats(day, month, year) {
     // Get current date
     const currentDate = new Date();
-    const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
     if(leapYear(year)) {
         daysInMonth[1] = 29;
@@ -73,6 +74,28 @@ function formatInput(val, id) {
     }
 }
 
+function showError(input, message) {
+    const formField = input.parentElement;
+
+    const error = formField.querySelector('.error');
+    error.textContent = message;
+}
+
+function dayCheck(input, val, month) {
+    let defaultMax = 31;
+
+    if(val.length === 0) {
+        showError(input, "This field is required")
+    } else if(month.length === 0 && val > defaultMax) {
+        showError(input, "Must be a valid day")
+    } else if(month && val > daysInMonth[month - 1]) {
+        showError(input, "Must be a valid day")
+    } else {
+        return true;
+    }
+    return false;
+}
+
 
 const button = document.getElementById("submit");
 
@@ -80,11 +103,21 @@ button.addEventListener("click", event => {
     event.preventDefault();
 
     // Get input values;
-    let month = document.getElementById("month").value;
-    let day = document.getElementById("day").value;
-    let year = document.getElementById("year").value;
+    let monthEl = document.getElementById("month");
+    let dayEl = document.getElementById("day");
+    let yearEl = document.getElementById("year");
 
+    let month = monthEl.value.trim();
+    let day = dayEl.value.trim();
+    let year = yearEl.value.trim();
+    
+    console.log(dayCheck(dayEl, day, month))
+    if(!dayCheck(dayEl, day, month)) {
+        return;
+    }
     const ageObj = calcStats(day, month, year);
+
+    
 
     // Format inputs so single digits have 0 on front
     formatInput(month, "month");

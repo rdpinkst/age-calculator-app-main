@@ -115,3 +115,42 @@ small {
 .red {
     color:hsl(0, 100%, 67%);
 }
+
+@media (max-width: 480px) {
+    .calc-card {
+        width: 80%;
+    }
+
+    form {
+        margin:1rem;
+    }
+    input {
+        font-size: 20px;
+    }
+    input::placeholder {
+        font-size: 20px;
+    }
+    .input-group {
+        width: 33%;
+    }
+    section p {
+        font-size: 3rem;
+    }
+    section {
+        margin: 1rem
+    }
+    button {
+        height: 50px;
+        width: 50px;
+    }
+    .btn {
+        position: relative;
+        top: 100%;
+        left: -80%;
+        display: flex;
+    }
+    img {
+        height: 50%;
+        width: 50%;
+    }
+}

@@ -66,7 +66,7 @@ function monthsOld(month, currMonth, day, currDay) {
 function yearsOld(year, currYear, day, currDay, month, currMonth) {
     let yearDifference = currYear - year;
    
-    if(month < currMonth) {
+    if(month > currMonth) {
         yearDifference -= 1;
     } else if(parseInt(month) === currMonth && day > currDay) {
         yearDifference -= 1;

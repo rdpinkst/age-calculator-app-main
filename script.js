@@ -45,7 +45,7 @@ function daysOld(day, current, month) {
         difference = daysInMonth[month - 1] - day + current;
     }
 
-    return difference;
+    return difference === daysInMonth[month - 1] ? 0 : difference;
 }
 
 function monthsOld(month, currMonth, day, currDay) {
@@ -60,7 +60,7 @@ function monthsOld(month, currMonth, day, currDay) {
     if(monthDifference === 12) {
         monthDifference = currDay >= day ? 0 : monthDifference - 1;
     }
-    return monthDifference;
+    return currDay < day ? monthDifference - 1 : monthDifference;
 }
 
 function yearsOld(year, currYear, day, currDay, month, currMonth) {

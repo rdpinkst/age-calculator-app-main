@@ -17,45 +17,62 @@ function calcStats(day, month, year) {
     }
 
     if(!day || !month || !year) {
-        console.log("inside")
         return null;
     }
 
     // Getting day, month and year from currentDate
     const currentDay = currentDate.getDate();
     const currentMonth = currentDate.getMonth() + 1;
-    const currentYear = currentDate.getFullYear();
+    const currentYear = currentDate.getFullYear();  
 
-    let diffMonth, diffYear, diffDay;
-    
-    if(parseInt(month) < currentMonth) {
-        diffMonth = currentMonth - month;
-        diffYear = currentYear - year;
-    } else if (parseInt(month) === currentMonth && day < currentDay){
-        diffYear = currentYear - year;
-        diffMonth = (12 - month) + currentMonth;
-    }else {
-        diffMonth = (12 - month) + currentMonth;
-        diffYear = currentYear - year - 1;
-    }
-    if(diffMonth === 12 && currentDay >= day) {
-        diffMonth = 0;
-    } else if(diffMonth === 12 && currentDay < day) {
-        diffMonth -= 1;
-    }
-
-    if(day < currentDay) {
-        diffDay = currentDay - day;
-    } else {
-        diffDay = daysInMonth[currentMonth - 1] - day + currentDay;
-    }
-
-    
+    let diffMonth = monthsOld(month, currentMonth, day, currentDay);
+    let diffDay = daysOld(day, currentDay, month);
+    let diffYear = yearsOld(year, currentYear, day, currentDay, month, currentMonth);
+ 
     return {
         diffMonth,
         diffDay,
         diffYear,
     }
+}
+
+function daysOld(day, current, month) {
+    let difference;
+
+    if(day < current) {
+        difference = current - day;
+    } else {
+        difference = daysInMonth[month - 1] - day + current;
+    }
+
+    return difference;
+}
+
+function monthsOld(month, currMonth, day, currDay) {
+    let monthDifference;
+
+    if(month < currMonth) {
+        monthDifference = currMonth - month;
+    } else {
+        monthDifference = 12 - month + currMonth;
+    }
+
+    if(monthDifference === 12) {
+        monthDifference = currDay >= day ? 0 : monthDifference - 1;
+    }
+    return monthDifference;
+}
+
+function yearsOld(year, currYear, day, currDay, month, currMonth) {
+    let yearDifference = currYear - year;
+   
+    if(month < currMonth) {
+        yearDifference -= 1;
+    } else if(parseInt(month) === currMonth && day > currDay) {
+        yearDifference -= 1;
+    }
+
+    return yearDifference;
 }
 
 function leapYear(year) {

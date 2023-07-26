@@ -117,7 +117,7 @@ small {
     color:hsl(0, 100%, 67%);
 }
 
-@media (max-width: 480px) {
+@media (max-width: 375px) {
     .calc-card {
         width: 90%;
     }

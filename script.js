@@ -95,6 +95,7 @@ function formatInput(val, id) {
 function showError(input, message) {
     const formField = input.parentElement;
 
+    formField.querySelector("input").style.boxShadow = '0 0 5px hsl(0, 100%, 67%)';;
     formField.querySelector("label").classList.add('red')
     const error = formField.querySelector('.error');
     error.textContent = message;
@@ -151,6 +152,8 @@ function clearError(input, val, val2, val3){
     const formField = input.parentElement;
     
     if(val && val2 && val3) {
+        
+        formField.querySelector("input").style.boxShadow = 'none';
         formField.querySelector("label").classList.remove("red");
         const error = formField.querySelector('.error');
         error.textContent = "";

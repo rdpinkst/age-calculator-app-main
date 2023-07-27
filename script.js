@@ -26,7 +26,7 @@ function calcStats(day, month, year) {
     const currentYear = currentDate.getFullYear();  
 
     let diffMonth = monthsOld(month, currentMonth, day, currentDay);
-    let diffDay = daysOld(day, currentDay, month);
+    let diffDay = daysOld(day, currentDay, currentMonth);
     let diffYear = yearsOld(year, currentYear, day, currentDay, month, currentMonth);
  
     return {
@@ -36,16 +36,16 @@ function calcStats(day, month, year) {
     }
 }
 
-function daysOld(day, current, month) {
+function daysOld(day, current, currMonth) {
     let difference;
 
     if(day < current) {
         difference = current - day;
     } else {
-        difference = daysInMonth[month - 1] - day + current;
+        difference = daysInMonth[currMonth - 2] - parseInt(day) + parseInt(current);
     }
 
-    return difference === daysInMonth[month - 1] ? 0 : difference;
+    return difference === daysInMonth[currMonth - 2] ? 0 : difference;
 }
 
 function monthsOld(month, currMonth, day, currDay) {
@@ -59,8 +59,11 @@ function monthsOld(month, currMonth, day, currDay) {
 
     if(monthDifference === 12) {
         monthDifference = currDay >= day ? 0 : monthDifference - 1;
+    } 
+    else {
+        monthDifference = currDay < day ? monthDifference - 1 : monthDifference;
     }
-    return currDay < day ? monthDifference - 1 : monthDifference;
+    return monthDifference;
 }
 
 function yearsOld(year, currYear, day, currDay, month, currMonth) {

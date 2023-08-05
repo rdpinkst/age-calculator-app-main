@@ -19,7 +19,7 @@ This is a solution to the [Age calculator app challenge on Frontend Mentor](http
 **Note: Delete this note and update the table of contents based on what sections you keep.**
 
 ## Overview
-The technology used to build this app is HTML5, CSS, and Javascript.  Using those technologies I built this app to look as close to the design as I could, just from the pictures.
+The technology used to build this app is HTML5, CSS, and Javascript.  Using those technologies I built this app to look as close to the original design as possible, just from the pictures.
 
 ### The challenge
 
@@ -46,7 +46,7 @@ Users should be able to:
 - Live Site URL: [https://rdpinkst.github.io/age-calculator-app-main/]
 
 ## My process
-Building this project, initially I designed the HTML5 markup.  With all the markup on the page I started to style the app with CSS.  When the page was looking close to the design I added functionality into the page with Javascript.  
+Building this project, initially I designed the HTML5 markup.  With all the markup on the page I started to style the app with CSS.  When the page was looking close to the design images I added functionality into the page with Javascript.  
 
 ### Built with
 
@@ -57,24 +57,22 @@ Building this project, initially I designed the HTML5 markup.  With all the mark
 
 ### What I learned
 
-A little tidbit that I learned while working the form validations was that to make the input not move up and down when an incorrect input happened, give the tag where the error will display a height. Example of that can be seen below: 
+A little tidbit that I learned while working on form validation was that to make the input not move up and down when an incorrect input occurred, give the tag where the error will display a height. Example of that can be seen below: 
 
 ```html
 <input type="text">
-<small class="give-height"></small>
+<small class="give-height-for-error"></small>
 ```
 ```css
-.give-height {
+.give-height-for-error {
   height: 1rem;
 }
 ```
 
 ### Continued development
 
-In future development I need to learn more about Semantic HTML, and work on getting better at using that in my projects, and not divs all the time.  I also need to work on my responsive design.  In completing this project I was able to get the mobile and desktop design to look alright, but the inbetween and break points did not look good at times.
+In future development I need to learn more about Semantic HTML, and work on getting better at using Semantic HTML in my projects, and not divs all the time.  I also need to work on my responsive design.  In completing this project I was able to get the mobile design at 375px close to design picture and desktop design to look alright, but the inbetween break points did not look good at times.
 
 ## Author
 
-- Website - [Add your name here](https://www.your-site.com)
-- Frontend Mentor - [@yourusername](https://www.frontendmentor.io/profile/yourusername)
-- Twitter - [@yourusername](https://www.twitter.com/yourusername)
+- Frontend Mentor - [@rdpinkst](https://www.frontendmentor.io/profile/rdpinkst)
